@@ -4,3 +4,7 @@ from django.conf import settings
 
 class CasbinAdapterConfig(AppConfig):
     name = "casbin_adapter"
+
+    def ready(self):
+        from .enforcer import enforcer
+        enforcer.db_alias = getattr(settings, "CASBIN_DB_ALIAS", "default")
